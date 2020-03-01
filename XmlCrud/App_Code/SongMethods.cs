@@ -33,7 +33,6 @@ namespace XmlCrud.App_Code
             dtSongs.Columns.Add(dcFile);
 
             //Read the data of XML file
-            ds.ReadXml(file);
 
             ds.ReadXml(HttpContext.Current.Server.MapPath(file));
 
