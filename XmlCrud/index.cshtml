@@ -7,6 +7,8 @@
 	SongMethods mySongMethods = new SongMethods();
 	string file = @"~\App_Data\Playlist.xml";
 	DataSet ds = mySongMethods.GetAllSongs(file);
+	Session["playlistClass"] = mySongMethods;
+	Session["file"] = file;
 }
 <html>
 <head>
