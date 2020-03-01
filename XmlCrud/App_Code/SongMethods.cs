@@ -8,10 +8,11 @@ namespace XmlCrud.App_Code
 {
     public class SongMethods
     {
+        private DataSet ds = new DataSet("playlist");
+
         public DataSet GetAllSongs(string file)
         {
             //setup some datesets, tables and columns
-            DataSet ds = new DataSet("playlist");
 
             DataTable dtSongs = new DataTable("song");
 
@@ -37,6 +38,16 @@ namespace XmlCrud.App_Code
             ds.ReadXml(HttpContext.Current.Server.MapPath(file));
 
             return ds;
+        }
+        public DataRow getEmptyDataRow()
+        {
+            DataRow dr = ds.Tables["song"].NewRow();
+            return dr;
+        }
+        public void CreateSong(DataRow dataRow, string file)
+        {
+            ds.Tables["song"].Rows.Add(dataRow);
+            ds.WriteXml(HttpContext.Current.Server.MapPath(file));
         }
     }
 }
