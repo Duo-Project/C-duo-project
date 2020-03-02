@@ -44,10 +44,22 @@ namespace XmlCrud.App_Code
             DataRow dr = ds.Tables["song"].NewRow();
             return dr;
         }
+        //create new song
         public void CreateSong(DataRow dataRow, string file)
         {
             ds.Tables["song"].Rows.Add(dataRow);
             ds.WriteXml(HttpContext.Current.Server.MapPath(file));
+        }
+
+        //Delete song
+        public void DeleteSong(string id, string file)
+        {
+            DataRow[] drArray = ds.Tables["song"].Select("id = '" + id + "'");
+            if (drArray != null && drArray.Length > 0)
+            {
+                drArray[0].Delete();
+                ds.WriteXml(HttpContext.Current.Server.MapPath(file));
+            }
         }
     }
 }
