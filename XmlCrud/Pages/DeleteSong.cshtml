@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+@using System.Data;
+@using XmlCrud.App_Code;
+
+@{
+    SongMethods mySongMethods = Session["playlistClass"] as SongMethods;
+    string file = Session["file"] as string;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        Weet u zeker dat u deze song wilt verwijderen?
+        <br />
+        Ja <input type="radio" name="yes" />
+        Nee <input type="radio" name="no" />
+        <br />
+        <input type="submit" name="verder" value="Verder" />
+    </div>
+</body>
+</html>
