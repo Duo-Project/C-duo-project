@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+@using System.Data;
+@using XmlCrud.App_Code;
+
+@{ 
+    SongMethods mySongMethods = Session["playlistClass"] as SongMethods;
+    string file = Session["file"] as string;
+}
+<html>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <form method="post">
+            Voer hier de gegevens van een nieuwe song toe:
+            <br />
+            ID: <input type="text" name="id" /> <br />
+            Artiest: <input type="text" name="artist"/> <br />
+            Titel: <input type="text" name="title"/> <br />
+            Jaar: <input type="text" name="year"/> <br />
+            Gerne: <input type="text" name="gerne"/> <br />
+            Tijd: <input type="text" name="time"/> <br />
+            File: <input type="text" name="file"/> <br />
+            <input type="submit" value="Save" />
+        </form>
+        @if (IsPost)
+        {
+            DataRow dr = mySongMethods.GetEmptyDataRow();
+
+            dr[0] = Request.Form["id"];
+            dr[1] = Request.Form["artist"];
+            dr[2] = Request.Form["title"];
+            dr[3] = Request.Form["year"];
+            dr[4] = Request.Form["gerne"];
+            dr[5] = Request.Form["time"];
+            dr[6] = Request.Form["file"];
+
+            mySongMethods.CreateSong(dr, file);
+            Response.Redirect(@"~/index.cshtml");
+        }
+    </div>
+</body>
+</html>

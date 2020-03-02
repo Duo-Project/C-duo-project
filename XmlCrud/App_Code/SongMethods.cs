@@ -39,7 +39,7 @@ namespace XmlCrud.App_Code
 
             return ds;
         }
-        public DataRow getEmptyDataRow()
+        public DataRow GetEmptyDataRow()
         {
             DataRow dr = ds.Tables["song"].NewRow();
             return dr;
