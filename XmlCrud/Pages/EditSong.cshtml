@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+@using System.Data;
+@using XmlCrud.App_Code;
+
+
+@{
+    SongMethods mySongMethods = new SongMethods();
+    string file = Session["file"] as string;
+    DataSet ds = mySongMethods.GetAllSongs(file);
+    Session["playlistClass"] = mySongMethods;
+    Session["file"] = file;
+    string id = Request.QueryString["id"];
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <table class="table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Artist</th>
+                <th>node</th>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Gerne</th>
+                <th>Time</th>
+                <th>File</th>
+
+                @foreach (DataRow dr in ds.Tables["song"].Select("id = '" + id + "'"))
+                {
+                <tr>
+                    <td>@dr["id"]</td>
+                    <td><input type="text" value="@dr["artist"]"></td>
+                    <td><input type="text" value="@dr["node1"]" /></td>
+
+                    <td><input type="text" value="@dr["title"]" /></td>
+                    <td><input type="text" value="@dr["year"]" /></td>
+                    <td><input type="text" value="@dr["gerne"]" /></td>
+                    <td><input type="text" value="@dr["time"]" /></td>
+                    <td><input type="text" value="@dr["file"]" /></td>
+                </tr>
+            }
+
+            </table>
+            <form method="POST">
+                <input type="submit" name="keuze" value="UPDATE" />
+            </form>
+            @if (IsPost)
+            {
+                string xmlFile = Server.MapPath(@"~/App_Data/Playlist.xml");
+                System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
+                xmlDoc.Load(xmlFile);
+                xmlDoc.SelectSingleNode("playlist/song/id").InnerText = "rr";
+                xmlDoc.Save(xmlFile);
+            }
+        </div>
+    </body>
+</html>

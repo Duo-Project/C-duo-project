@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
+using System.Xml.Linq;
 
 namespace XmlCrud.App_Code
 {
@@ -57,6 +58,16 @@ namespace XmlCrud.App_Code
             DataRow[] drArray = ds.Tables["song"].Select("id = '" + id + "'");
             if (drArray != null && drArray.Length > 0)
             {
+                drArray[0].Delete();
+                ds.WriteXml(HttpContext.Current.Server.MapPath(file));
+            }
+        }
+        public void EditSong(string id, string file)
+        {
+            DataRow[] drArray = ds.Tables["song"].Select("id = '" + id + "'");
+            if (drArray != null && drArray.Length > 0)
+            {
+
                 drArray[0].Delete();
                 ds.WriteXml(HttpContext.Current.Server.MapPath(file));
             }
