@@ -55,7 +55,7 @@
                 string xmlFile = Server.MapPath(@"~/App_Data/Playlist.xml");
                 System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
                 xmlDoc.Load(xmlFile);
-                xmlDoc.SelectSingleNode("playlist/song/[id = "+id+"").InnerText = "rr";
+                xmlDoc.SelectSingleNode("playlist/song[id = "+id+"").InnerText = "rr";
                 xmlDoc.Save(xmlFile);
             }
         </div>
