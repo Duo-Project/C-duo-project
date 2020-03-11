@@ -12,14 +12,16 @@
 }
 <html>
 <head>
+	<link href="~/Content/font-awesome.css" rel="stylesheet"/>
 	<link href="~/Content/bootstrap.css" rel="stylesheet" />
 	<script src="~/Scripts/jquery-3.0.0.js"></script>
 	<script src="~/Scripts/bootstrap.js"></script>
+	
 </head>
 <body>
 	<br/><br/>
 
-	<table class="table-bordered">
+	<table class="table table-bordered">
 		<tr>
 			<th>Id</th>
 			<th>Artist</th>
@@ -39,8 +41,8 @@
 			<td>@dr["gerne"]</td>
 			<td>@dr["time"]</td>
 			<td>@dr["file"]</td>
-			<td><a href="~/Pages/EditSong.cshtml?id=@dr["id"]">Edit</a></td>
-			<td><a href="~/Pages/DeleteSong.cshtml?id=@dr["id"]">Verwijderen</a></td>
+			<td><a href="~/Pages/EditSong.cshtml?id=@dr["id"]"><i class="fa fa-edit"></i></a></td>
+			<td><a href="~/Pages/DeleteSong.cshtml?id=@dr["id"]"><i class="fa fa-trash"></i></a></td>
 		</tr>
 		}
 	</table>

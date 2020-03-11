@@ -9,4 +9,13 @@
     <time>1</time>
     <file>1</file>
   </song>
+  <song>
+    <id>1</id>
+    <artist>1</artist>
+    <title>1</title>
+    <year>1</year>
+    <gerne>1</gerne>
+    <time>1</time>
+    <file>1</file>
+  </song>
 </playlist>
