@@ -53,32 +53,7 @@
             </form>
             @if (IsPost)
             {
-                /*string xmlFile = Server.MapPath(@"~/App_Data/Playlist.xml");
-                System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
-                xmlDoc.Load(xmlFile);
-                xmlDoc.SelectSingleNode("playlist/song[id=1]").InnerText = "rr";
-                xmlDoc.Save(xmlFile);
-                        Response.Redirect(@"~/index.cshtml");
-*/
-                //string artist = "artist";
-                string[] boomer = { "artist", "title", "year", "gerne", "time", "file" };
-
-
-
-                XmlDocument xmlDoc = new XmlDocument();
-                string load = Server.MapPath(@"~/App_Data/Playlist.xml");
-                xmlDoc.Load(load);
-                //XmlNode name = xmlDoc.SelectSingleNode("playlist/song[id="+id+"]/" + artist + "" );
-                foreach (string data in boomer)
-                {
-                    XmlNode name = xmlDoc.SelectSingleNode("playlist/song[id=" + id + "]/" + data + "");
-                    name.InnerText = "working";
-
-                }
-                xmlDoc.Save(load);
-
-                /*                mySongMethods.EditSong(id, file);
-                */
+                
                 Response.Redirect(@"~/index.cshtml");
             }
         </div>
