@@ -53,7 +53,7 @@
         @if (IsPost)
         {
             DataRow dr = mySongMethods.GetEmptyDataRow();
-
+            
             dr[0] = Request.Form["id"];
             dr[1] = Request.Form["artist"];
             dr[2] = Request.Form["title"];
@@ -61,6 +61,7 @@
             dr[4] = Request.Form["gerne"];
             dr[5] = Request.Form["time"];
             dr[6] = Request.Form["file"];
+
 
             mySongMethods.CreateSong(dr, file);
             Response.Redirect(@"~/index.cshtml");
