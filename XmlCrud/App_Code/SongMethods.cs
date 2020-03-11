@@ -65,7 +65,10 @@ namespace XmlCrud.App_Code
         }
         
         //update song
-        public void 
+        public void EditSong(string id, string file)
+        {
+
+        }
         
     }
 }
