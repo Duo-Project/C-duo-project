@@ -10,13 +10,16 @@
     <time>1</time>
     <file>1</file>
   </song>
+  <song />
+  <song />
   <song>
-    <id>2</id>
-    <artist>fg</artist>
-    <title>rr</title>
-    <year>r</year>
-    <gerne>r</gerne>
-    <time>r</time>
-    <file>r</file>
+    <id>11</id>
+    <node1>1</node1>
+    <artist>1</artist>
+    <title>1</title>
+    <year>1</year>
+    <gerne>1</gerne>
+    <time />
   </song>
+  <song>rr</song>
 </playlist>
