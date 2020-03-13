@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="yes"?>
+<playlist>
+  <song>
+    <id>rr</id>
+    <artist>1</artist>
+    <title>tete</title>
+    <year>1</year>
+    <gerne>1</gerne>
+    <time>1</time>
+    <file>1</file>
+  </song>
+  <song>
+    <id>1</id>
+    <artist>1</artist>
+    <title>1</title>
+    <year>1</year>
+    <gerne>1</gerne>
+    <time>1</time>
+    <file>1</file>
+  </song>
+  <song>
+    <id>1</id>
+    <artist>1</artist>
+    <title>1</title>
+    <year>1</year>
+    <gerne>11</gerne>
+    <time>1</time>
+    <file>1</file>
+  </song>
+</playlist>
