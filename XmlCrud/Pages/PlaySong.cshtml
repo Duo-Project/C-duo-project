@@ -17,14 +17,19 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title></title>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
 </head>
 <body>
     <div>
         @foreach (DataRow dr in ds.Tables["song"].Select("id = '" + id + "'"))
         {
         <audio src="~/Uploads/@dr["file"]" controls="controls">
-            Put alternate content here
-        </audio>
+            </audio>
+            <br /><br />
+            <a href="~/index.cshtml"><i class="fa fa-home"></i></a>
         }
 
     
