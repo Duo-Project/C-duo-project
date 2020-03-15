@@ -5,6 +5,8 @@
 @using System.Xml.Linq;
 @using System.Xml;
 @using System.Text.RegularExpressions;
+@using System.IO;
+
 
 @{
     SongMethods mySongMethods = Session["playlistClass"] as SongMethods;
@@ -23,7 +25,7 @@
 </head>
 <body>
     <div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>ID:</td>
@@ -51,7 +53,7 @@
                 </tr>
                 <tr>
                     <td>File:</td>
-                    <td><input type="text" name="file" /></td>
+                    <td><input type="file" name="file" /></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -61,19 +63,30 @@
         </form>
         @if (IsPost)
         {
-            DataRow dr = mySongMethods.GetEmptyDataRow();
-            //dr[0] = Request.Form["id"];
-            dr[0] = replaced;
-            dr[1] = Request.Form["artist"];
-            dr[2] = Request.Form["title"];
-            dr[3] = Request.Form["year"];
-            dr[4] = Request.Form["gerne"];
-            dr[5] = Request.Form["time"];
-            dr[6] = Request.Form["file"];
 
+            HttpPostedFileBase postedFile = Request.Files["file"];
+            if (postedFile != null && postedFile.ContentLength > 0)
+            {
+                //save the file
+                string filepath = Server.MapPath("~/Uploads/") + Path.GetFileName(postedFile.FileName);
+                string filename = Path.GetFileName(postedFile.FileName);
+                postedFile.SaveAs(filepath);
+                //}
 
-            mySongMethods.CreateSong(dr, file);
-            Response.Redirect(@"~/index.cshtml");
+                DataRow dr = mySongMethods.GetEmptyDataRow();
+                //dr[0] = Request.Form["id"];
+                dr[0] = replaced;
+                dr[1] = Request.Form["artist"];
+                dr[2] = Request.Form["title"];
+                dr[3] = Request.Form["year"];
+                dr[4] = Request.Form["gerne"];
+                dr[5] = Request.Form["time"];
+                //dr[6] = Request.Form["file"];
+                dr[6] = filename;
+
+                mySongMethods.CreateSong(dr, file);
+                Response.Redirect(@"~/index.cshtml");
+            }
         }
     </div>
 </body>

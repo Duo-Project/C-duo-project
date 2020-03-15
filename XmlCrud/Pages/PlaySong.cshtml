@@ -1,0 +1,33 @@
+﻿@using System.Data;
+@using XmlCrud.App_Code;
+@using System.Xml.Linq;
+@using System.Xml;
+
+@{
+    SongMethods mySongMethods = new SongMethods();
+    string file = Session["file"] as string;
+    DataSet ds = mySongMethods.GetAllSongs(file);
+    Session["playlistClass"] = mySongMethods;
+    Session["file"] = file;
+    string id = Request.QueryString["id"];
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        @foreach (DataRow dr in ds.Tables["song"].Select("id = '" + id + "'"))
+        {
+        <audio src="~/Uploads/@dr["file"]" controls="controls">
+            Put alternate content here
+        </audio>
+        }
+
+    
+    </div>
+</body>
+</html>
