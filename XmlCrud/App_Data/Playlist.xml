@@ -18,4 +18,13 @@
     <time>warers</time>
     <file>Sound-effect-of-walking-through-water.mp3</file>
   </song>
+  <song>
+    <id>3</id>
+    <artist>henk</artist>
+    <title>henk</title>
+    <year>0</year>
+    <gerne>test</gerne>
+    <time>2222</time>
+    <file>That_Crooner_from_Nowhere_-_07_-_No_Time_To_Die_For.mp3</file>
+  </song>
 </playlist>
