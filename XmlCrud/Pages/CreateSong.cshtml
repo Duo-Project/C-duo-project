@@ -13,11 +13,20 @@
     string file = Session["file"] as string;
     //Auto id
     var xDoc = XDocument.Load(Server.MapPath(@"~/App_Data/Playlist.xml"));
-    var count = xDoc.Descendants("song").Count();
+    /*var count = xDoc.Descendants("song").Count();
     var firstId = new XElement("id", count + 1).ToString();
     //remove all characters but no digits
-    var replaced = Regex.Replace(firstId, "[^0-9]", "");
-}
+    var replaced = Regex.Replace(firstId, "[^0-9]", "");*/
+
+    //test
+    var test1 = xDoc.Descendants("id").Last();
+    var test2 = test1;
+    var test3 = new XElement("id", test2).ToString();
+    var test4 = Regex.Replace(test3, "[^0-9]", "");
+    var test5 = int.Parse(test4);
+    var test = test5 + 1;
+
+        }
 <html>
 <head>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
@@ -31,7 +40,7 @@
             <table>
                 <tr>
                     <td>ID:</td>
-                    <td><input type="text" name="id" readonly value="@replaced" /></td>
+                    <td><input type="text" name="id" readonly value="@test" /></td>
                 </tr>
                 <tr>
                     <td>Artist:</td>
@@ -59,7 +68,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" name="SAVE" value="SAVE"/></td>
+                    <td><input type="submit" name="SAVE" value="SAVE" /></td>
 
                 </tr>
             </table>
@@ -78,7 +87,7 @@
 
                 DataRow dr = mySongMethods.GetEmptyDataRow();
                 //dr[0] = Request.Form["id"];
-                dr[0] = replaced;
+                dr[0] = test;
                 dr[1] = Request.Form["artist"];
                 dr[2] = Request.Form["title"];
                 dr[3] = Request.Form["year"];
