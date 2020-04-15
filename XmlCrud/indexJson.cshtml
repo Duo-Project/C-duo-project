@@ -1,0 +1,27 @@
+﻿@using XmlCrud.App_Code;
+@{
+    var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\Playlist.json"));
+    //Song song = Newtonsoft.Json.JsonConvert.DeserializeObject<Song>(jsonInput);
+
+    Songs songs = Newtonsoft.Json.JsonConvert.DeserializeObject<Songs>(jsonInput);
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+       @foreach (Song song in songs.songs)
+           {
+               @song.id;
+               @song.artist;
+           }
+       
+
+    </div>
+</body>
+</html>

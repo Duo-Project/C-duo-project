@@ -1,0 +1,16 @@
+{
+  "songs": [
+    {
+      "id": "1",
+      "artist": "henk",
+      "title": "test",
+      "year": "2004"
+    },
+    {
+      "id": "2",
+      "artist": "Raymond",
+      "title": "The Best ;-)",
+      "year": "2020"
+    }
+  ] 
+}
