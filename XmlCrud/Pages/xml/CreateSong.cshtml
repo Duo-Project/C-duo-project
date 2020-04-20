@@ -80,7 +80,7 @@
             if (postedFile != null && postedFile.ContentLength > 0)
             {
                 //save the file
-                string filepath = Server.MapPath("~/Uploads/") + Path.GetFileName(postedFile.FileName);
+                string filepath = Server.MapPath("~/Uploads/xml/") + Path.GetFileName(postedFile.FileName);
                 string filename = Path.GetFileName(postedFile.FileName);
                 postedFile.SaveAs(filepath);
                 //}

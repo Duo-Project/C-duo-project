@@ -2,11 +2,16 @@
 <playlist>
   <song>
     <id>1</id>
-    <artist />
-    <title />
-    <year />
-    <gerne />
-    <time />
+    <artist>
+    </artist>
+    <title>
+    </title>
+    <year>
+    </year>
+    <gerne>
+    </gerne>
+    <time>
+    </time>
     <file>Sound-effect-of-walking-through-water.mp3</file>
   </song>
   <song>

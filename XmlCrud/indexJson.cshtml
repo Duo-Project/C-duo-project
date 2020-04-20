@@ -1,9 +1,56 @@
 ﻿@using XmlCrud.App_Code;
+@using Newtonsoft.Json.Linq;
+@using Newtonsoft.Json;
+
+
 @{
     var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\Playlist.json"));
     //Song song = Newtonsoft.Json.JsonConvert.DeserializeObject<Song>(jsonInput);
 
     Songs songs = Newtonsoft.Json.JsonConvert.DeserializeObject<Songs>(jsonInput);
+
+
+
+    //var testInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\test2.json"));
+    string testInput = @"C:\Users\bjorn\source\repos\C-duo-project\XmlCrud\App_Data\test2.json";
+    if (IsPost)
+    {
+        //<script>alert("test")</script>
+        string json = File.ReadAllText(testInput);
+
+        try
+        {
+            var jObject = JObject.Parse(json);
+            JArray experiencesArrary = (JArray)jObject["songs"];
+
+            var artistId = Convert.ToInt32("1");
+
+            if (artistId > 0)
+            {
+
+                var artistName = Convert.ToString("henkdesteen");
+
+                foreach (var company in experiencesArrary.Where(obj => obj["id"].Value<int>() == artistId))
+                {
+                    company["artist"] = !string.IsNullOrEmpty(artistName) ? artistName : "";
+                }
+
+                jObject["songs"] = experiencesArrary;
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(testInput, output);
+            }
+            else
+            {
+                <script>alert("KAPOET")</script>
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+
+            <script>alert("KAPOET")</script>
+        }
+    }
 
 }
 <!DOCTYPE html>
@@ -19,24 +66,33 @@
 </head>
 <body>
     <div>
-       @foreach (Song song in songs.songs)
-           {
-               @song.id;
-               @song.artist;
-           }
         <table class="table table-bordered">
             <tr>
                 <th>Id</th>
                 <th>Artist</th>
                 <th>Title</th>
                 <th>Year</th>
-                <th>Gerne</th>
+                <th>Genre</th>
                 <th>Time</th>
                 <th>File</th>
             </tr>
-               
-            </table>
-
+            @foreach (Song song in songs.songs)
+            {
+                <tr>
+                    <td>@song.id</td>
+                    <td>@song.artist</td>
+                    <td>@song.title</td>
+                    <td>@song.year</td>
+                    <td>@song.genre</td>
+                    <td>@song.time</td>
+                    <td>@song.file</td>
+                </tr>
+            }
+        </table>
     </div>
+    <br /><br />
+    <a href="Pages\json\createSong.cshtml">Een nieuwe song toevoegen.</a>
+    <br /><br />
+    <a href="~/index.cshtml">Klik hier om naar het xml gedeelte te gaan!!</a>
 </body>
 </html>

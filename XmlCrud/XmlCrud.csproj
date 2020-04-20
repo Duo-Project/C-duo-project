@@ -92,7 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Playlist.xml" />
-    <Content Include="App_Data\test.xml" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -125,17 +124,17 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Pages\CreateSong.cshtml" />
-    <Content Include="Pages\DeleteSong.cshtml" />
-    <Content Include="Pages\EditSong.cshtml" />
+    <Content Include="Pages\xml\CreateSong.cshtml" />
+    <Content Include="Pages\xml\DeleteSong.cshtml" />
+    <Content Include="Pages\xml\EditSong.cshtml" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="Pages\PlaySong.cshtml" />
     <Content Include="App_Data\Playlist.json" />
     <Content Include="indexJson.cshtml" />
+    <Content Include="Pages\json\createSong.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -242,7 +241,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Uploads\" />
+    <Folder Include="Uploads\json\" />
+    <Folder Include="Uploads\xml\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

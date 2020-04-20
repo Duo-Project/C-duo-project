@@ -11,6 +11,9 @@ namespace XmlCrud.App_Code
         public string artist { get; set; }
         public string title { get; set; }
         public string year { get; set; }
+        public string genre { get; set; }
+        public string time { get; set; }
+        public string file { get; set; }
 
     }
     public class Songs
@@ -18,4 +21,5 @@ namespace XmlCrud.App_Code
         public List<Song> songs { get; set; }
 
     }
+   
 }
