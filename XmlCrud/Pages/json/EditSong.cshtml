@@ -2,6 +2,7 @@
 @using Newtonsoft.Json.Linq;
 @using Newtonsoft.Json;
 @{
+    
     var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json"));
     var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json");
     string json = File.ReadAllText(filePath);
@@ -18,7 +19,6 @@
     var currentSongTime = currentNode.SelectToken("time").ToString();
     var currentSongFile = currentNode.SelectToken("file").ToString();
 }
-
 <!DOCTYPE html>
 
 <html>
@@ -28,7 +28,7 @@
 </head>
 <body>
     <div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <table class="table table-bordered">
                 <tr>
                     <th>Id</th>
@@ -38,6 +38,7 @@
                     <th>Gerne</th>
                     <th>Time</th>
                     <th>File</th>
+                    <th>Update song file*</th>
                 </tr>
                 <tr>
                     <td><input type="text" value="@currentSongId" readonly /> </td>
@@ -46,16 +47,44 @@
                     <td><input type="text" value="@currentSongYear" name="year" /></td>
                     <td><input type="text" value="@currentSongGenre" name="genre" /></td>
                     <td><input type="text" value="@currentSongTime" name="time" /></td>
-                    <td><input type="text" value="@currentSongFile" name="file" /></td>
+                    <td><input type="text" value="@currentSongFile" readonly name="file"/></td>
+                    <td><input type="file" value="@currentSongFile" name="songFile" /></td>
+                    <td><input type="radio" name="updateSong" value="ja"/></td>
                 </tr>
 
 
-                <input type="submit" value="SAVE" name="submit" />
+                <tr>
+                    <td><input type="submit" value="SAVE" name="submit" /></td>
+
+                </tr>
+
+            </table>
         </form>
+        <p>*IF you want to update the music file, pls check the box, and select a file from your pc</p>
+
     </div>
     @{
         if (IsPost)
         {
+            string filename = "";
+            //check als de songfile geupdate moet worden
+            if (Request.Form["updateSong"] == "ja")
+            {
+                HttpPostedFileBase postedFile = Request.Files["songfile"];
+                if (postedFile != null && postedFile.ContentLength > 0)
+                {
+                    //save the file
+                    string filepath = Server.MapPath("~/Uploads/json/") + Path.GetFileName(postedFile.FileName);
+                    filename = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(filepath);
+                }
+
+            }
+            //zonder deze else wordt de naam blank
+            else
+            {
+                filename = currentSongFile;
+            }
             JArray songArray = (JArray)jObject["songs"];
             var artistId = Convert.ToInt32(id);
             if (artistId > 0)
@@ -65,7 +94,7 @@
                 var newYear = Request.Form["year"];
                 var newGenre = Request.Form["genre"];
                 var newTime = Request.Form["time"];
-                var newFile = Request.Form["file"];
+                var newFile = filename;
 
                 foreach (var song in songArray.Where(obj => obj["id"].Value<int>() == artistId))
                 {
@@ -84,9 +113,10 @@
             }
             else
             {
-                    <script>alert("KAPOET")</script>
-            }                      
+                        <script>alert("KAPOET")</script>
+            }
         }
+    }
     }
 </body>
 </html>

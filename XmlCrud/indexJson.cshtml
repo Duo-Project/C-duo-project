@@ -46,7 +46,7 @@
             <td>@song.file</td>
             <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
             <td><a onclick="return confirm('are you sure?')" ; href="~/indexJson.cshtml?action=delete&id=@song.id"><i class="fa fa-trash"></i></a></td>
-            <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file">
+            <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file"></audio>
             <td><i id="@song.id a" style="display:none;" class="fa fa-pause" onclick="document.getElementById('@song.id').pause(); document.getElementById('@song.id a').style.display= 'none' "></i></td>
         </tr>
             }
