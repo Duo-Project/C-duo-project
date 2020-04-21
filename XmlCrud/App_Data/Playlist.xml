@@ -1,35 +1,12 @@
 <?xml version="1.0" standalone="yes"?>
 <playlist>
   <song>
-    <id>1</id>
-    <artist>
-    </artist>
-    <title>
-    </title>
-    <year>
-    </year>
-    <gerne>
-    </gerne>
-    <time>
-    </time>
-    <file>Sound-effect-of-walking-through-water.mp3</file>
-  </song>
-  <song>
-    <id>3</id>
-    <artist />
-    <title />
-    <year />
-    <gerne />
-    <time />
-    <file>That_Crooner_from_Nowhere_-_07_-_No_Time_To_Die_For.mp3</file>
-  </song>
-  <song>
-    <id>4</id>
+    <id>0</id>
     <artist>w</artist>
     <title>w</title>
     <year>w</year>
     <gerne>w</gerne>
     <time>w</time>
-    <file>Sound-effect-of-walking-through-water.mp3</file>
+    <file>w</file>
   </song>
 </playlist>

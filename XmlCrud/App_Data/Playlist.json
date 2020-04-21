@@ -1,49 +1,31 @@
 {
   "songs": [
     {
+      "id": "0",
+      "artist": "",
+      "title": "",
+      "year": "",
+      "genre": "",
+      "time": "",
+      "file": ""
+    },
+    {
       "id": "1",
-      "artist": "henk",
-      "title": "test",
-      "year": "2004",
-      "genre": "rock",
-      "time": "3:00",
-      "file": "testfile.mp3"
+      "artist": "Roddy Ricch",
+      "title": "The Box",
+      "year": "2019",
+      "genre": "Hiphop/rap",
+      "time": "3:21",
+      "file": "y2mate.com - Roddy Ricch - The Box [Official Music Video]_UNZqm3dxd2w.mp3"
     },
     {
       "id": "2",
-      "artist": "Raymond",
-      "title": "The Best ;-)",
-      "year": "2020",
-      "genre": "hugrhjgrjhgrjhigr",
-      "time": "3:22",
-      "file": "theBest.mp3"
-    },
-    {
-      "id": "3",
-      "artist": "niels",
-      "title": "q",
-      "year": "q",
-      "genre": "q",
-      "time": "q",
-      "file": "That_Crooner_from_Nowhere_-_07_-_No_Time_To_Die_For.mp3"
-    },
-    {
-      "id": "4",
-      "artist": "bielson",
-      "title": "een dag",
-      "year": "2002",
-      "genre": "rock",
-      "time": "4:33",
-      "file": "That_Crooner_from_Nowhere_-_07_-_No_Time_To_Die_For.mp3"
-    },
-    {
-      "id": "5",
-      "artist": "drake",
-      "title": "gods plan",
-      "year": "2019",
-      "genre": "rap",
-      "time": "3:21",
-      "file": "Sound-effect-of-walking-through-water.mp3"
+      "artist": " Jason Tefaora",
+      "title": "BASS BOOSTED TEST - HARD TRAP DROPS - SUBWOOFER TEST",
+      "year": "2017",
+      "genre": "bass boosted",
+      "time": "2:54",
+      "file": "y2mate.com - BASS BOOSTED TEST - HARD TRAP DROPS - SUBWOOFER TEST_Dk5Dmt-9OgI.mp3"
     }
   ]
 }

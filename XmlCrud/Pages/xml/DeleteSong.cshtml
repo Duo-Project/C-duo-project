@@ -20,21 +20,30 @@
         <form method="post">
             Weet u zeker dat u deze song wilt verwijderen?
             <br />
-            Ja <input type="radio" name="keuze" value="ja"/>
-            Nee <input type="radio" name="keuze" value="nee"/>
+            Ja <input type="radio" name="keuze" value="ja" />
+            Nee <input type="radio" name="keuze" value="nee" />
             <br />
             <input type="submit" name="verder" value="Verder" />
         </form>
-    @if (IsPost)
-    {
-        if (Request.Form["keuze"] == "ja")
+        @if (Request.QueryString["id"] == "0")
         {
-            string id = Request.QueryString["id"];
-            mySongMethods.DeleteSong(id, file);
+      
+        <script>window.alert("Sorry, But you cant delete this one, otherwise it will cause problems"); window.location.href="/index.cshtml"</script>
         }
+        @if (IsPost)
+        {
 
-        Response.Redirect(@"~/index.cshtml");
-    }
+
+
+            if (Request.Form["keuze"] == "ja")
+            {
+                string id = Request.QueryString["id"];
+                mySongMethods.DeleteSong(id, file);
+            }
+
+
+            Response.Redirect(@"~/index.cshtml");
+        }
     </div>
 </body>
 </html>

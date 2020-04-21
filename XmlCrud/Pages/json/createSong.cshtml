@@ -14,8 +14,6 @@
     //add +1 to the last id
     var newId = stringId + 1;
 }
-
-
 <!DOCTYPE html>
 
 <html>
@@ -66,7 +64,6 @@
         </form>
         @if (IsPost)
         {
-
             HttpPostedFileBase postedFile = Request.Files["file"];
             if (postedFile != null && postedFile.ContentLength > 0)
             {
@@ -85,7 +82,6 @@
                 var time = Request.Form["time"];
                 var file = Request.Form["file"];
                 //
-
                 var newSongNode = "{ 'id': '" + id + "', 'artist': '" + artist + "', 'title': '" + title + "', 'year': '" + year + "', 'genre': '" + genre + "', 'time': '" + time + "', 'file': '" + filename + "',}";
                 var jsonObject = JObject.Parse(json);
                 var songArray = jsonObject.GetValue("songs") as JArray;
@@ -95,9 +91,9 @@
                 string newResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(filePath, newResult);
                 Response.Redirect(@"~/indexJson.cshtml");
-
             }
         }
+         
     </div>
 </body>
 </html>

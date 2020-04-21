@@ -7,6 +7,9 @@
     var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\Playlist.json"));
     //Song song = Newtonsoft.Json.JsonConvert.DeserializeObject<Song>(jsonInput);
     Songs songs = Newtonsoft.Json.JsonConvert.DeserializeObject<Songs>(jsonInput);
+
+    var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json");
+    string json = File.ReadAllText(filePath);
 }
 <!DOCTYPE html>
 
@@ -42,7 +45,9 @@
             <td>@song.time</td>
             <td>@song.file</td>
             <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
-
+            <td><a onclick="return confirm('are you sure?')" ; href="~/indexJson.cshtml?action=delete&id=@song.id"><i class="fa fa-trash"></i></a></td>
+            <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file">
+            <td><i id="@song.id a" style="display:none;" class="fa fa-pause" onclick="document.getElementById('@song.id').pause(); document.getElementById('@song.id a').style.display= 'none' "></i></td>
         </tr>
             }
         </table>
@@ -51,5 +56,39 @@
     <a href="Pages\json\createSong.cshtml">Een nieuwe song toevoegen.</a>
     <br /><br />
     <a href="~/index.cshtml">Klik hier om naar het xml gedeelte te gaan!!</a>
+    @{
+        var uri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+        var query = HttpUtility.ParseQueryString(uri.Query);
+        var var2 = query.Get("action");
+        if(var2 == "delete")
+        {
+            <h3>action = @var2</h3>
+            if(Request.QueryString["id"] == "0")
+            {
+                <script>alert("Sorry You cant delete this one!!")</script>
+            }
+            else if(Request.QueryString["id"] != "0")
+            {
+                var jObject = JObject.Parse(json);
+                JArray songArray = (JArray)jObject["songs"];
+                var songId = Request.QueryString["id"];
+                var intSongId = int.Parse(songId);
+                if(intSongId > 0)
+                {
+                    var songName = string.Empty;
+                    var songToDelete = songArray.FirstOrDefault(obj => obj["id"].Value<string>() == songId);
+                    songArray.Remove(songToDelete);
+
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText(filePath, output);
+                    Response.Redirect(@"~/indexJson.cshtml");
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+    }
 </body>
 </html>
