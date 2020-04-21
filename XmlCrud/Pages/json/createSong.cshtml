@@ -7,7 +7,7 @@
     var jObject = JObject.Parse(json);
     //get last node of the playlist
     var lastNode = jObject.SelectToken("songs").Last;
-    //get the the id of the last node 
+    //get the the id of the last node
     var lastId = lastNode.SelectToken("id").ToString();
     //transfer it to int
     var stringId = int.Parse(lastId);
@@ -85,18 +85,17 @@
                 var time = Request.Form["time"];
                 var file = Request.Form["file"];
                 //
-                //var newSong = "{ 'id': " + id + ", 'artist': "+artist+ ", 'title': " + title + ", 'year': " + year + ", 'genre': " + genre + ", 'time': " + time + ", 'file': " + file + ",}";
-                //var newSong = "{ 'id': " + id + "}";
-                var newSongNode = "{ 'id': '"+id+ "', 'artist': '" + artist + "', 'title': '" + title + "', 'year': '" + year + "', 'genre': '" + genre + "', 'time': '" + time + "', 'file': '" + filename + "',}";
+
+                var newSongNode = "{ 'id': '" + id + "', 'artist': '" + artist + "', 'title': '" + title + "', 'year': '" + year + "', 'genre': '" + genre + "', 'time': '" + time + "', 'file': '" + filename + "',}";
                 var jsonObject = JObject.Parse(json);
                 var songArray = jsonObject.GetValue("songs") as JArray;
                 var newSong = JObject.Parse(newSongNode);
                 songArray.Add(newSong);
-
                 jsonObject["songs"] = songArray;
                 string newResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(filePath, newResult);
                 Response.Redirect(@"~/indexJson.cshtml");
+
             }
         }
     </div>
