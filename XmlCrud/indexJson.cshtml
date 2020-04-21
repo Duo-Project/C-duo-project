@@ -6,52 +6,7 @@
 @{
     var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\Playlist.json"));
     //Song song = Newtonsoft.Json.JsonConvert.DeserializeObject<Song>(jsonInput);
-
     Songs songs = Newtonsoft.Json.JsonConvert.DeserializeObject<Songs>(jsonInput);
-
-
-
-    //var testInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\test2.json"));
-    string testInput = @"C:\Users\bjorn\source\repos\C-duo-project\XmlCrud\App_Data\test2.json";
-    if (IsPost)
-    {
-        //<script>alert("test")</script>
-        string json = File.ReadAllText(testInput);
-
-        try
-        {
-            var jObject = JObject.Parse(json);
-            JArray experiencesArrary = (JArray)jObject["songs"];
-
-            var artistId = Convert.ToInt32("1");
-
-            if (artistId > 0)
-            {
-
-                var artistName = Convert.ToString("henkdesteen");
-
-                foreach (var company in experiencesArrary.Where(obj => obj["id"].Value<int>() == artistId))
-                {
-                    company["artist"] = !string.IsNullOrEmpty(artistName) ? artistName : "";
-                }
-
-                jObject["songs"] = experiencesArrary;
-                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(testInput, output);
-            }
-            else
-            {
-                <script>alert("KAPOET")</script>
-                return;
-            }
-        }
-        catch (Exception ex)
-        {
-
-            <script>alert("KAPOET")</script>
-        }
-    }
-
 }
 <!DOCTYPE html>
 
@@ -78,15 +33,17 @@
             </tr>
             @foreach (Song song in songs.songs)
             {
-                <tr>
-                    <td>@song.id</td>
-                    <td>@song.artist</td>
-                    <td>@song.title</td>
-                    <td>@song.year</td>
-                    <td>@song.genre</td>
-                    <td>@song.time</td>
-                    <td>@song.file</td>
-                </tr>
+        <tr>
+            <td>@song.id</td>
+            <td>@song.artist</td>
+            <td>@song.title</td>
+            <td>@song.year</td>
+            <td>@song.genre</td>
+            <td>@song.time</td>
+            <td>@song.file</td>
+            <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
+
+        </tr>
             }
         </table>
     </div>

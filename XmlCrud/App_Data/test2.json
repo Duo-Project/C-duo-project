@@ -2,7 +2,7 @@
   "songs": [
     {
       "id": "1",
-      "artist": "henk",
+      "artist": "henkdesteen",
       "title": "test",
       "year": "2004",
       "genre": "rock",
@@ -20,7 +20,7 @@
     },
     {
       "id": "3",
-      "artist": "niels",
+      "artist": "q",
       "title": "q",
       "year": "q",
       "genre": "q",
@@ -29,21 +29,12 @@
     },
     {
       "id": "4",
-      "artist": "bielson",
-      "title": "een dag",
-      "year": "2002",
-      "genre": "rock",
-      "time": "4:33",
+      "artist": "q",
+      "title": "q",
+      "year": "q",
+      "genre": "qqq",
+      "time": "q",
       "file": "That_Crooner_from_Nowhere_-_07_-_No_Time_To_Die_For.mp3"
-    },
-    {
-      "id": "5",
-      "artist": "drake",
-      "title": "gods plan",
-      "year": "2019",
-      "genre": "rap",
-      "time": "3:21",
-      "file": "Sound-effect-of-walking-through-water.mp3"
     }
   ]
 }

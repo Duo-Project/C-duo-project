@@ -2,8 +2,8 @@
 @using Newtonsoft.Json.Linq;
 @using Newtonsoft.Json;
 @{
-    string testInput = @"C:\Users\bjorn\source\repos\C-duo-project\XmlCrud\App_Data\Playlist.json";
-    string json = File.ReadAllText(testInput);
+    var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json");
+    string json = File.ReadAllText(filePath);
     var jObject = JObject.Parse(json);
     //get last node of the playlist
     var lastNode = jObject.SelectToken("songs").Last;
@@ -95,7 +95,7 @@
 
                 jsonObject["songs"] = songArray;
                 string newResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(testInput, newResult);
+                File.WriteAllText(filePath, newResult);
                 Response.Redirect(@"~/indexJson.cshtml");
             }
         }

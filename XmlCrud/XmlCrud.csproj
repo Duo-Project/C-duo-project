@@ -135,6 +135,7 @@
     <Content Include="App_Data\Playlist.json" />
     <Content Include="indexJson.cshtml" />
     <Content Include="Pages\json\createSong.cshtml" />
+    <Content Include="Pages\json\EditSong.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

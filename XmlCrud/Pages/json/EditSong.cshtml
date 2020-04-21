@@ -1,0 +1,92 @@
+﻿@using XmlCrud.App_Code;
+@using Newtonsoft.Json.Linq;
+@using Newtonsoft.Json;
+@{
+    var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json"));
+    var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json");
+    string json = File.ReadAllText(filePath);
+    string id = Request.QueryString["id"];
+
+    var jObject = JObject.Parse(json);
+
+    var currentNode = jObject.SelectToken("songs[?(@.id == '"+id+"')]");
+    var currentSongId = currentNode.SelectToken("id").ToString();
+    var currentSongArtist = currentNode.SelectToken("artist").ToString();
+    var currentSongTitle = currentNode.SelectToken("title").ToString();
+    var currentSongYear = currentNode.SelectToken("year").ToString();
+    var currentSongGenre = currentNode.SelectToken("genre").ToString();
+    var currentSongTime = currentNode.SelectToken("time").ToString();
+    var currentSongFile = currentNode.SelectToken("file").ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form method="post">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Id</th>
+                    <th>Artist</th>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Gerne</th>
+                    <th>Time</th>
+                    <th>File</th>
+                </tr>
+                <tr>
+                    <td><input type="text" value="@currentSongId" readonly /> </td>
+                    <td><input type="text" value="@currentSongArtist" name="artist"></td>
+                    <td><input type="text" value="@currentSongTitle" name="title" /></td>
+                    <td><input type="text" value="@currentSongYear" name="year" /></td>
+                    <td><input type="text" value="@currentSongGenre" name="genre" /></td>
+                    <td><input type="text" value="@currentSongTime" name="time" /></td>
+                    <td><input type="text" value="@currentSongFile" name="file" /></td>
+                </tr>
+
+
+                <input type="submit" value="SAVE" name="submit" />
+        </form>
+    </div>
+    @{
+        if (IsPost)
+        {
+            JArray songArray = (JArray)jObject["songs"];
+            var artistId = Convert.ToInt32(id);
+            if (artistId > 0)
+            {
+                var newArtist = Request.Form["artist"];
+                var newTitle = Request.Form["title"];
+                var newYear = Request.Form["year"];
+                var newGenre = Request.Form["genre"];
+                var newTime = Request.Form["time"];
+                var newFile = Request.Form["file"];
+
+                foreach (var song in songArray.Where(obj => obj["id"].Value<int>() == artistId))
+                {
+                    song["artist"] = !string.IsNullOrEmpty(newArtist) ? newArtist : "";
+                    song["title"] = !string.IsNullOrEmpty(newTitle) ? newTitle : "";
+                    song["year"] = !string.IsNullOrEmpty(newYear) ? newYear : "";
+                    song["genre"] = !string.IsNullOrEmpty(newGenre) ? newGenre : "";
+                    song["time"] = !string.IsNullOrEmpty(newTime) ? newTime : "";
+                    song["file"] = !string.IsNullOrEmpty(newFile) ? newFile : "";
+
+                }
+                jObject["songs"] = songArray;
+                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(filePath, output);
+                Response.Redirect(@"~/indexJson.cshtml");
+            }
+            else
+            {
+                    <script>alert("KAPOET")</script>
+            }                      
+        }
+    }
+</body>
+</html>
