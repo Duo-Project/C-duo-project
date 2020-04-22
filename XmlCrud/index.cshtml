@@ -43,9 +43,8 @@
                 <td>@dr["file"]</td>
                 <td><a href="~/Pages/xml/EditSong.cshtml?id=@dr["id"]"><i class="fa fa-edit"></i></a></td>
                 <td><a href="~/Pages/xml/DeleteSong.cshtml?id=@dr["id"]"><i class="fa fa-trash"></i></a></td>
-                <td><i class="fa fa-play" onclick="document.getElementById('@dr["id"]').play();document.getElementById('@dr["id"]a').style.display = 'block' "></i><audio id="@dr["id"]" src="~/Uploads/xml/@dr["file"]">
+                <td><i class="fa fa-play" onclick="document.getElementById('@dr["id"]').play();document.getElementById('@dr["id"]a').style.display = 'block' "></i><audio id="@dr["id"]" src="~/Uploads/xml/@dr["file"]"></audio>
                 <td><i id="@dr["id"]a" style="display:none;" class="fa fa-pause" onclick="document.getElementById('@dr["id"]').pause(); document.getElementById('@dr["id"]a').style.display= 'none' "></i></td>
-                </audio></td>
             </tr>
         }
         </table>
