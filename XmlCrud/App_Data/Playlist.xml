@@ -9,4 +9,13 @@
     <time>w</time>
     <file>w</file>
   </song>
+  <song>
+    <id>1</id>
+    <artist>Bjorn</artist>
+    <title>Kaboom Boom</title>
+    <year>2032</year>
+    <gerne>Happy Kaboomboom</gerne>
+    <time>12:20</time>
+    <file>/dev/null/</file>
+  </song>
 </playlist>
