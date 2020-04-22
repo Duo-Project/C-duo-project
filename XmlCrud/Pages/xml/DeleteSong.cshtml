@@ -12,31 +12,34 @@
     <title></title>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/custom/index.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
 </head>
 <body>
-    <div>
+    <div class="jumbotron">
+        <h1>XML CRUD</h1>
+        <p>Verwijder Song - Verwijder een nummber van de Database!</p>
+    </div>
+    <div class="content">
         <form method="post">
             Weet u zeker dat u deze song wilt verwijderen?
             <br />
             Ja <input type="radio" name="keuze" value="ja" />
             Nee <input type="radio" name="keuze" value="nee" />
             <br />
-            <input type="submit" name="verder" value="Verder" />
+            <br />
+            <input type="submit" name="verder" value="Verder" class="btn btn-primary" />
         </form>
-        @if (Request.QueryString["id"] == "0")
-        {
-      
-        <script>window.alert("Sorry, But you cant delete this one, otherwise it will cause problems"); window.location.href="/index.cshtml"</script>
+        @if (Request.QueryString["id"] == "0") {
+
+            <script>window.alert("Sorry, But you cant delete this one, otherwise it will cause problems"); window.location.href = "/index.cshtml"</script>
         }
-        @if (IsPost)
-        {
+        @if (IsPost) {
 
 
 
-            if (Request.Form["keuze"] == "ja")
-            {
+            if (Request.Form["keuze"] == "ja") {
                 string id = Request.QueryString["id"];
                 mySongMethods.DeleteSong(id, file);
             }
