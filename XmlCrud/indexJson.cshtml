@@ -18,11 +18,16 @@
     <title></title>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/custom/index.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
 </head>
 <body>
-    <div>
+    <div class="jumbotron">
+        <h1>JSON CRUD</h1>
+        <p>Songs overview</p>
+    </div>
+    <div class="content">
         <table class="table table-bordered">
             <tr>
                 <th>Id</th>
@@ -33,46 +38,44 @@
                 <th>Time</th>
                 <th>File</th>
             </tr>
-            @foreach (Song song in songs.songs)
-            {
-        <tr>
-            <td>@song.id</td>
-            <td>@song.artist</td>
-            <td>@song.title</td>
-            <td>@song.year</td>
-            <td>@song.genre</td>
-            <td>@song.time</td>
-            <td>@song.file</td>
-            <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
-            <td><a onclick="return confirm('are you sure?')" ; href="~/indexJson.cshtml?action=delete&id=@song.id"><i class="fa fa-trash"></i></a></td>
-            <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file"></audio>
-            <td><i id="@song.id a" style="display:none;" class="fa fa-pause" onclick="document.getElementById('@song.id').pause(); document.getElementById('@song.id a').style.display= 'none' "></i></td>
-        </tr>
-            }
+            @foreach (Song song in songs.songs) {
+                if (song.id == "0") {}
+                else {
+                <tr>
+                    <td>@song.id</td>
+                    <td>@song.artist</td>
+                    <td>@song.title</td>
+                    <td>@song.year</td>
+                    <td>@song.genre</td>
+                    <td>@song.time</td>
+                    <td>@song.file</td>
+                    <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
+                    <td><a onclick="return confirm('are you sure?')" ; href="~/indexJson.cshtml?action=delete&id=@song.id"><i class="fa fa-trash"></i></a></td>
+                    <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file"></audio>
+                    <td><i id="@song.id a" style="display:none;" class="fa fa-pause" onclick="document.getElementById('@song.id').pause(); document.getElementById('@song.id a').style.display= 'none' "></i></td>
+                </tr>
+                    }
+                }
         </table>
+        <br /><br />
+        <a href="Pages\json\createSong.cshtml" class="btn btn-primary">Nieuw nummer toevoegen</a>
+        <br /><br />
+        <a href="~/index.cshtml" class="btn btn-primary">XML Gedeelte</a>
     </div>
-    <br /><br />
-    <a href="Pages\json\createSong.cshtml">Een nieuwe song toevoegen.</a>
-    <br /><br />
-    <a href="~/index.cshtml">Klik hier om naar het xml gedeelte te gaan!!</a>
     @{
         var uri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
         var query = HttpUtility.ParseQueryString(uri.Query);
         var var2 = query.Get("action");
-        if(var2 == "delete")
-        {
-            if(Request.QueryString["id"] == "0")
-            {
+        if (var2 == "delete") {
+            if (Request.QueryString["id"] == "0") {
                 <script>alert("Sorry You cant delete this one!!")</script>
             }
-            else if(Request.QueryString["id"] != "0")
-            {
+            else if (Request.QueryString["id"] != "0") {
                 var jObject = JObject.Parse(json);
                 JArray songArray = (JArray)jObject["songs"];
                 var songId = Request.QueryString["id"];
                 var intSongId = int.Parse(songId);
-                if(intSongId > 0)
-                {
+                if (intSongId > 0) {
                     var songName = string.Empty;
                     var songToDelete = songArray.FirstOrDefault(obj => obj["id"].Value<string>() == songId);
                     songArray.Remove(songToDelete);
@@ -81,8 +84,7 @@
                     File.WriteAllText(filePath, output);
                     Response.Redirect(@"~/indexJson.cshtml");
                 }
-                else
-                {
+                else {
                     return;
                 }
             }
