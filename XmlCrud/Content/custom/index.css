@@ -1,5 +1,10 @@
 ﻿.content {
-    margin: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: calc(100vh - 272px);
+    overflow: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .fa-play {
     color: green;
@@ -11,6 +16,7 @@
 }
 .jumbotron{
     background-color: lightgray;
+    margin-bottom: 0px;
 }
 body{
     background-color: lightcyan;
