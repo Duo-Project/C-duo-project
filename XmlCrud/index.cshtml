@@ -36,12 +36,10 @@
                 <th>Time</th>
                 <th>File</th>
             </tr>
-            @foreach (DataRow dr in ds.Tables["song"].Rows)
-            {
+            @foreach (DataRow dr in ds.Tables["song"].Rows) {
                 string songnumber = Convert.ToString(dr["id"]);
                 if (songnumber == "0") { }
-                else
-                {
+                else {
                     <tr>
                         <td>@dr["id"]</td>
                         <td>@dr["artist"]</td>
@@ -52,8 +50,15 @@
                         <td>@dr["file"]</td>
                         <td><a href="~/Pages/xml/EditSong.cshtml?id=@dr["id"]"><i class="fa fa-edit"></i></a></td>
                         <td><a href="~/Pages/xml/DeleteSong.cshtml?id=@dr["id"]"><i class="fa fa-trash"></i></a></td>
-                        <td><i class="fa fa-play" onclick="document.getElementById('@dr["id"]').play();document.getElementById('@dr["id"]b').style.display = 'block' "></i><audio id="@dr["id"]" src="~/Uploads/xml/@dr["file"]"></audio>
-                        <td id="@dr["id"]b" style="display:none;"><i class="fa fa-pause" onclick="document.getElementById('@dr["id"]').pause(); document.getElementById('@dr["id"]b').style.display= 'none' "></i></td>
+                        <td>
+                            <div id="@dr["id"]p">
+                                <i class="fa fa-play" onclick="document.getElementById('@dr["id"]').play();document.getElementById('@dr["id"]b').style.display = 'block' ; document.getElementById('@dr["id"]p').style.display= 'none' "></i>
+                                <audio id="@dr["id"]" src="~/Uploads/xml/@dr["file"]"></audio>
+                            </div>
+                            <div id="@dr["id"]b" style="display:none;">
+                            <i class="fa fa-pause" onclick="document.getElementById('@dr["id"]').pause(); document.getElementById('@dr["id"]b').style.display = 'none'; document.getElementById('@dr["id"]p').style.display = 'block' "></i>
+                            </div>
+                         </td>
                     </tr>
                 }
             }
