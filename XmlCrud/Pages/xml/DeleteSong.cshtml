@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
 @using System.Data;
 @using XmlCrud.App_Code;
-
 @{
     SongMethods mySongMethods = Session["playlistClass"] as SongMethods;
     string file = Session["file"] as string;
@@ -15,6 +14,7 @@
     <link href="~/Content/custom/index.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <title>DeleteSong XML || CRUD</title>
 </head>
 <body>
     <div class="jumbotron">
@@ -31,22 +31,27 @@
             <br />
             <input type="submit" name="verder" value="Verder" class="btn btn-primary" />
         </form>
-        @if (Request.QueryString["id"] == "0") {
-
+        @if (Request.QueryString["id"] == "0")
+        {
             <script>window.alert("Sorry, But you cant delete this one, otherwise it will cause problems"); window.location.href = "/index.cshtml"</script>
         }
-        @if (IsPost) {
-
-
-
-            if (Request.Form["keuze"] == "ja") {
+        @if (IsPost)
+        {
+            //check if the choose to delete song is "ja"
+            if (Request.Form["keuze"] == "ja")
+            {
                 string id = Request.QueryString["id"];
                 mySongMethods.DeleteSong(id, file);
+                Response.Redirect(@"~/index.cshtml");
             }
-
-
-            Response.Redirect(@"~/index.cshtml");
+            if (Request.Form["keuze"] == "nee")
+            {
+                Response.Redirect(@"~/index.cshtml");
+            }
         }
+    </div>
+    <div class="copy card-footer">
+        &copy; 2020 Copyright: <a>Bjorn van der Horst & Yorick Bosman</a>
     </div>
 </body>
 </html>

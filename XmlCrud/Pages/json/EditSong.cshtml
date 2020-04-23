@@ -1,15 +1,13 @@
 ﻿@using XmlCrud.App_Code;
 @using Newtonsoft.Json.Linq;
 @using Newtonsoft.Json;
-@{
-    
-    var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json"));
+@{    
     var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json");
     string json = File.ReadAllText(filePath);
+    //request the id of the song via the url
     string id = Request.QueryString["id"];
-
     var jObject = JObject.Parse(json);
-
+    //get all current nodes
     var currentNode = jObject.SelectToken("songs[?(@.id == '"+id+"')]");
     var currentSongId = currentNode.SelectToken("id").ToString();
     var currentSongArtist = currentNode.SelectToken("artist").ToString();
@@ -20,7 +18,6 @@
     var currentSongFile = currentNode.SelectToken("file").ToString();
 }
 <!DOCTYPE html>
-
 <html>
 <head>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
@@ -28,6 +25,7 @@
     <link href="~/Content/custom/createsong.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <title>EditSong JSON || CRUD</title>
 </head>
 <body>
     <div class="jumbotron">
@@ -76,59 +74,67 @@
                 <tr>
                     <td></td>
                     <td><input type="submit" name="SAVE" value="SAVE" class="btn btn-primary" /></td>
+                    <td><input type="submit" name="CANCEL" value="CANCEL" class="btn btn-primary" onclick="return confirm('are you sure?')" ; /></td>
                 </tr>
-
             </table>
         </form>
-
     </div>
     @{
         if (IsPost) {
-            string filename = "";
-            //check als de songfile geupdate moet worden
-            if (Request.Form["updateSong"] == "ja") {
-                HttpPostedFileBase postedFile = Request.Files["songfile"];
-                if (postedFile != null && postedFile.ContentLength > 0) {
-                    //save the file
-                    string filepath = Server.MapPath("~/Uploads/json/") + Path.GetFileName(postedFile.FileName);
-                    filename = Path.GetFileName(postedFile.FileName);
-                    postedFile.SaveAs(filepath);
+            if (Request.Form["SAVE"] == "SAVE")
+            {
+                string filename = "";
+                //check als de songfile geupdate moet worden
+                if (Request.Form["updateSong"] == "ja")
+                {
+                    HttpPostedFileBase postedFile = Request.Files["songfile"];
+                    if (postedFile != null && postedFile.ContentLength > 0)
+                    {
+                        //save the file
+                        string filepath = Server.MapPath("~/Uploads/json/") + Path.GetFileName(postedFile.FileName);
+                        filename = Path.GetFileName(postedFile.FileName);
+                        postedFile.SaveAs(filepath);
+                    }
                 }
-
-            }
-            //zonder deze else wordt de naam blank
-            else {
-                filename = currentSongFile;
-            }
-            JArray songArray = (JArray)jObject["songs"];
-            var artistId = Convert.ToInt32(id);
-            if (artistId > 0) {
-                var newArtist = Request.Form["artist"];
-                var newTitle = Request.Form["title"];
-                var newYear = Request.Form["year"];
-                var newGenre = Request.Form["genre"];
-                var newTime = Request.Form["time"];
-                var newFile = filename;
-
-                foreach (var song in songArray.Where(obj => obj["id"].Value<int>() == artistId)) {
-                    song["artist"] = !string.IsNullOrEmpty(newArtist) ? newArtist : "";
-                    song["title"] = !string.IsNullOrEmpty(newTitle) ? newTitle : "";
-                    song["year"] = !string.IsNullOrEmpty(newYear) ? newYear : "";
-                    song["genre"] = !string.IsNullOrEmpty(newGenre) ? newGenre : "";
-                    song["time"] = !string.IsNullOrEmpty(newTime) ? newTime : "";
-                    song["file"] = !string.IsNullOrEmpty(newFile) ? newFile : "";
-
+                //without this else the song file name shall be blank
+                else
+                {
+                    filename = currentSongFile;
                 }
-                jObject["songs"] = songArray;
-                string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(filePath, output);
+                JArray songArray = (JArray)jObject["songs"];
+                var artistId = Convert.ToInt32(id);
+                if (artistId > 0)
+                {
+                    //new values 
+                    var newArtist = Request.Form["artist"];
+                    var newTitle = Request.Form["title"];
+                    var newYear = Request.Form["year"];
+                    var newGenre = Request.Form["genre"];
+                    var newTime = Request.Form["time"];
+                    var newFile = filename;
+
+                    foreach (var song in songArray.Where(obj => obj["id"].Value<int>() == artistId))
+                    {
+                        song["artist"] = !string.IsNullOrEmpty(newArtist) ? newArtist : "";
+                        song["title"] = !string.IsNullOrEmpty(newTitle) ? newTitle : "";
+                        song["year"] = !string.IsNullOrEmpty(newYear) ? newYear : "";
+                        song["genre"] = !string.IsNullOrEmpty(newGenre) ? newGenre : "";
+                        song["time"] = !string.IsNullOrEmpty(newTime) ? newTime : "";
+                        song["file"] = !string.IsNullOrEmpty(newFile) ? newFile : "";
+                    }
+                    jObject["songs"] = songArray;
+                    string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText(filePath, output);
+                    Response.Redirect(@"~/indexJson.cshtml");
+                }
+            }
+            if(Request.Form["CANCEL"] == "CANCEL"){
                 Response.Redirect(@"~/indexJson.cshtml");
             }
-            else {
-                <script>alert("KAPOET")</script>
-            }
         }
-    }
-    }
+        }
+    <div class="copy card-footer">
+        &copy; 2020 Copyright: <a>Bjorn van der Horst & Yorick Bosman</a>
+    </div>
 </body>
 </html>

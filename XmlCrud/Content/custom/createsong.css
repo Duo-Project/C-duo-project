@@ -2,3 +2,17 @@
 form {
     margin: 15px;
 }
+
+
+.jumbotron {
+    background-color: lightgray;
+}
+
+body {
+    background-color: lightcyan;
+}
+
+
+.copy{
+    background-color: lightgray;
+}

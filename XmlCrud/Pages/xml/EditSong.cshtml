@@ -1,9 +1,7 @@
 ﻿<!DOCTYPE html>
 @using System.Data;
 @using XmlCrud.App_Code;
-@using System.Xml.Linq;
 @using System.Xml;
-
 @{
     SongMethods mySongMethods = new SongMethods();
     string file = Session["file"] as string;
@@ -19,6 +17,7 @@
     <link href="~/Content/custom/createsong.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <title>EditSong XML || CRUD</title>
 </head>
 <body>
     <div class="jumbotron">
@@ -29,7 +28,8 @@
         <form method="POST">
 
             <table class="table">
-                `               @foreach (DataRow dr in ds.Tables["song"].Select("id = '" + id + "'")) {
+                @foreach (DataRow dr in ds.Tables["song"].Select("id = '" + id + "'"))
+                {
                     <tr>
                         <td>ID:</td>
                         <td><input type="text" name="id" value="@dr["id"]" readonly /></td>
@@ -62,38 +62,44 @@
                 <tr>
                     <td></td>
                     <td><input type="submit" name="SAVE" value="SAVE" class="btn btn-primary" /></td>
+                    <td><input type="submit" name="CANCEL" value="CANCEL" class="btn btn-primary" onclick="return confirm('are you sure?')" ; /></td>
                 </tr>
             </table>
         </form>
+        @if (IsPost)
+        {
+            if (Request.Form["SAVE"] == "SAVE")
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                string load = Server.MapPath(@"~/App_Data/Playlist.xml");
+                xmlDoc.Load(load);
+                //select the nodes the overwrite
+                XmlNode artist = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/artist");
+                XmlNode title = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/title");
+                XmlNode year = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/year");
+                XmlNode gerne = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/gerne");
+                XmlNode time = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/time");
+                XmlNode file_music = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/file");
 
-        @if (IsPost) {
-            XmlDocument xmlDoc = new XmlDocument();
-            string load = Server.MapPath(@"~/App_Data/Playlist.xml");
-            xmlDoc.Load(load);
-
-            //select
-            XmlNode artist = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/artist");
-            XmlNode title = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/title");
-            XmlNode year = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/year");
-            XmlNode gerne = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/gerne");
-            XmlNode time = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/time");
-            XmlNode file_music = xmlDoc.SelectSingleNode("playlist/song[id='" + id + "']/file");
-
-            artist.InnerText = Request.Form["artist"];
-            title.InnerText = Request.Form["title"];
-            year.InnerText = Request.Form["year"];
-            gerne.InnerText = Request.Form["gerne"];
-            time.InnerText = Request.Form["time"];
-            file_music.InnerText = Request.Form["file"];
-
-
-            xmlDoc.Save(load);
-
-            Response.Redirect(@"~/index.cshtml");
-
-
-
+                //request the data to overwrite with the old data
+                artist.InnerText = Request.Form["artist"];
+                title.InnerText = Request.Form["title"];
+                year.InnerText = Request.Form["year"];
+                gerne.InnerText = Request.Form["gerne"];
+                time.InnerText = Request.Form["time"];
+                file_music.InnerText = Request.Form["file"];
+                //save the file
+                xmlDoc.Save(load);
+                Response.Redirect(@"~/index.cshtml");
+            }
+            if (Request.Form["CANCEL"] == "CANCEL")
+            {
+                Response.Redirect(@"~/index.cshtml");
+            }
         }
+    </div>
+    <div class="copy card-footer">
+        &copy; 2020 Copyright: <a>Bjorn van der Horst & Yorick Bosman</a>
     </div>
 </body>
 </html>

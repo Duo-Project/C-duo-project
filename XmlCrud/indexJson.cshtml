@@ -1,21 +1,18 @@
 ﻿@using XmlCrud.App_Code;
 @using Newtonsoft.Json.Linq;
-@using Newtonsoft.Json;
-
-
 @{
-    var jsonInput = File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\App_Data\Playlist.json"));
-    Songs songs = Newtonsoft.Json.JsonConvert.DeserializeObject<Songs>(jsonInput);
-
+    //path to the playlist
     var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Playlist.json");
+    //read all the text in the playlist file
     string json = File.ReadAllText(filePath);
+    Songs songs = Newtonsoft.Json.JsonConvert.DeserializeObject<Songs>(json);
 }
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <title>JSON || CRUD</title>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/custom/index.css" rel="stylesheet" />
@@ -38,57 +35,72 @@
                 <th>Time</th>
                 <th>File</th>
             </tr>
-            @foreach (Song song in songs.songs) {
-                if (song.id == "0") {}
-                else {
-                <tr>
-                    <td>@song.id</td>
-                    <td>@song.artist</td>
-                    <td>@song.title</td>
-                    <td>@song.year</td>
-                    <td>@song.genre</td>
-                    <td>@song.time</td>
-                    <td>@song.file</td>
-                    <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
-                    <td><a onclick="return confirm('are you sure?')" ; href="~/indexJson.cshtml?action=delete&id=@song.id"><i class="fa fa-trash"></i></a></td>
-                    <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file"></audio>
-                    <td><i id="@song.id a" style="display:none;" class="fa fa-pause" onclick="document.getElementById('@song.id').pause(); document.getElementById('@song.id a').style.display= 'none' "></i></td>
-                </tr>
-                    }
+            @foreach (Song song in songs.songs)
+            {
+                //this ensures that the song with the id 0 is not shown
+                if (song.id == "0") { }
+                else
+                {
+                    <tr>
+                        <td>@song.id</td>
+                        <td>@song.artist</td>
+                        <td>@song.title</td>
+                        <td>@song.year</td>
+                        <td>@song.genre</td>
+                        <td>@song.time</td>
+                        <td>@song.file</td>
+                        <td><a href="~/Pages/json/EditSong.cshtml?id=@song.id"><i class="fa fa-edit"></i></a></td>
+                        <td><a onclick="return confirm('are you sure?')" ; href="~/indexJson.cshtml?action=delete&id=@song.id"><i class="fa fa-trash"></i></a></td>
+                        <td><i class="fa fa-play" onclick="document.getElementById('@song.id').play();document.getElementById('@song.id a').style.display = 'block' "></i><audio id="@song.id" src="~/Uploads/json/@song.file"></audio>
+                        <td id="@song.id a" style="display:none; "><i class="fa fa-pause" onclick="document.getElementById('@song.id').pause(); document.getElementById('@song.id a').style.display= 'none' "></i></td>
+                    </tr>
                 }
+            }
         </table>
-        <br /><br />
-        <a href="Pages\json\createSong.cshtml" class="btn btn-primary">Nieuw nummer toevoegen</a>
-        <br /><br />
-        <a href="~/index.cshtml" class="btn btn-primary">XML Gedeelte</a>
     </div>
+    <br /><br />
+    <a href="Pages\json\createSong.cshtml" class="btn btn-primary">Nieuw nummer toevoegen</a>
+    <br /><br />
+    <a href="~/index.cshtml" class="btn btn-primary">XML Gedeelte</a>
+
     @{
+        //get the url
         var uri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
         var query = HttpUtility.ParseQueryString(uri.Query);
-        var var2 = query.Get("action");
-        if (var2 == "delete") {
-            if (Request.QueryString["id"] == "0") {
+        //get the action of the url
+        var getAction = query.Get("action");
+        if (getAction == "delete")
+        {
+            //if the song id is 0 give error
+            if (Request.QueryString["id"] == "0")
+            {
                 <script>alert("Sorry You cant delete this one!!")</script>
             }
-            else if (Request.QueryString["id"] != "0") {
+            //if the song id is not 0 run this code
+            else if (Request.QueryString["id"] != "0")
+            {
                 var jObject = JObject.Parse(json);
                 JArray songArray = (JArray)jObject["songs"];
                 var songId = Request.QueryString["id"];
                 var intSongId = int.Parse(songId);
-                if (intSongId > 0) {
+                if (intSongId > 0)
+                {
                     var songName = string.Empty;
                     var songToDelete = songArray.FirstOrDefault(obj => obj["id"].Value<string>() == songId);
                     songArray.Remove(songToDelete);
-
                     string output = Newtonsoft.Json.JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented);
                     File.WriteAllText(filePath, output);
                     Response.Redirect(@"~/indexJson.cshtml");
                 }
-                else {
+                else
+                {
                     return;
                 }
             }
         }
     }
+    <div class="copy card-footer">
+        &copy; 2020 Copyright: <a>Bjorn van der Horst & Yorick Bosman</a>
+    </div>
 </body>
 </html>

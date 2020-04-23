@@ -23,6 +23,7 @@
     <link href="~/Content/custom/createsong.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <title>CreateSong JSON || CRUD</title>
 </head>
 <body>
     <div class="jumbotron">
@@ -63,40 +64,53 @@
                 <tr>
                     <td></td>
                     <td><input type="submit" name="SAVE" value="SAVE" class="btn btn-primary" /></td>
+                    <td><input type="submit" name="CANCEL" value="CANCEL" class="btn btn-primary" onclick="return confirm('are you sure?')" ; /></td>
                 </tr>
             </table>
         </form>
 
-        @if (IsPost) {
-            HttpPostedFileBase postedFile = Request.Files["file"];
-            if (postedFile != null && postedFile.ContentLength > 0) {
-                //save the file
-                string filepath = Server.MapPath("~/Uploads/json/") + Path.GetFileName(postedFile.FileName);
-                string filename = Path.GetFileName(postedFile.FileName);
-                postedFile.SaveAs(filepath);
-                //}
-                //add song
-                //get all data for new song
-                var id = newId;
-                var artist = Request.Form["artist"];
-                var title = Request.Form["title"];
-                var year = Request.Form["year"];
-                var genre = Request.Form["genre"];
-                var time = Request.Form["time"];
-                var file = Request.Form["file"];
-                //
-                var newSongNode = "{ 'id': '" + id + "', 'artist': '" + artist + "', 'title': '" + title + "', 'year': '" + year + "', 'genre': '" + genre + "', 'time': '" + time + "', 'file': '" + filename + "',}";
-                var jsonObject = JObject.Parse(json);
-                var songArray = jsonObject.GetValue("songs") as JArray;
-                var newSong = JObject.Parse(newSongNode);
-                songArray.Add(newSong);
-                jsonObject["songs"] = songArray;
-                string newResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(filePath, newResult);
+        @if (IsPost)
+        {
+            if (Request.Form["SAVE"] == "SAVE")
+            {
+                HttpPostedFileBase postedFile = Request.Files["file"];
+                if (postedFile != null && postedFile.ContentLength > 0)
+                {
+                    //save the file
+                    string filepath = Server.MapPath("~/Uploads/json/") + Path.GetFileName(postedFile.FileName);
+                    string filename = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(filepath);
+                    //add song
+                    //get all data for new song
+                    var id = newId;
+                    var artist = Request.Form["artist"];
+                    var title = Request.Form["title"];
+                    var year = Request.Form["year"];
+                    var genre = Request.Form["genre"];
+                    var time = Request.Form["time"];
+                    var file = Request.Form["file"];
+                    //make a new node
+                    var newSongNode = "{ 'id': '" + id + "', 'artist': '" + artist + "', 'title': '" + title + "', 'year': '" + year + "', 'genre': '" + genre + "', 'time': '" + time + "', 'file': '" + filename + "',}";
+                    var jsonObject = JObject.Parse(json);
+                    var songArray = jsonObject.GetValue("songs") as JArray;
+                    var newSong = JObject.Parse(newSongNode);
+                    songArray.Add(newSong);
+                    jsonObject["songs"] = songArray;
+                    string newResult = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject, Newtonsoft.Json.Formatting.Indented);
+                    //write new node to the playlist
+                    File.WriteAllText(filePath, newResult);
+                    Response.Redirect(@"~/indexJson.cshtml");
+                }
+            }
+            if (Request.Form["CANCEL"] == "CANCEL")
+            {
                 Response.Redirect(@"~/indexJson.cshtml");
             }
         }
 
+    </div>
+    <div class="copy card-footer">
+        &copy; 2020 Copyright: <a>Bjorn van der Horst & Yorick Bosman</a>
     </div>
 </body>
 </html>
