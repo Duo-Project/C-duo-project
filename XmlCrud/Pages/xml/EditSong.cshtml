@@ -59,11 +59,10 @@
                         <td><input type="text" value="@dr["file"]" readonly name="file" /></td>
                     </tr>
                 }
-                <tr>
-                    <td></td>
-                    <td><input type="submit" name="SAVE" value="SAVE" class="btn btn-primary" /></td>
-                    <td><input type="submit" name="CANCEL" value="CANCEL" class="btn btn-primary" onclick="return confirm('are you sure?')" ; /></td>
-                </tr>
+            <tr>
+                <td><input type="submit" name="CANCEL" value="CANCEL" class="btn btn-primary" onclick="return confirm('are you sure?')" ; /></td>
+                <td><input type="submit" name="SAVE" value="SAVE" class="btn btn-primary" /></td>
+            </tr>
             </table>
         </form>
         @if (IsPost)
